@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class UnBook implements Runnable {
+	Path path = new Path();
 	// the threads are placed into a FIFO queue when blocked, so any starvation
 	// problems are solved.
 	public static Semaphore writeLock = new Semaphore(1, true);
@@ -25,7 +26,7 @@ public class UnBook implements Runnable {
 			int val = read.getParis();
 			val++;
 			
-			FileWriter myWriter = new FileWriter("C:\\\\Users\\\\yhya2\\\\Desktop\\\\Hamid\\\\files\\\\paris.txt");
+			FileWriter myWriter = new FileWriter(path.files()+"\\paris.txt");
 			myWriter.write(String.valueOf(val));
 			
 			writeLock.release();
