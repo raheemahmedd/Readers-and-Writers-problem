@@ -9,7 +9,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class Remove {
-	public void run(String ticketNo) {
+	static boolean successful;
+	public boolean run(String ticketNo) {
 		try {
 			File inputFile = new File("C:\\\\Users\\\\yhya2\\\\Desktop\\\\Hamid\\\\files\\\\names.txt");
 			File tempFile = new File("C:\\\\Users\\\\yhya2\\\\Desktop\\\\Hamid\\\\files\\\\tempfile.txt");
@@ -28,6 +29,7 @@ public class Remove {
 				if(trimmedLine.equals(lineToRemove)) continue;
 				writer.write(currentLine + System.getProperty("line.separator"));
 			}
+			successful = tempFile.renameTo(inputFile);
 			writer.close(); 
 			reader.close(); 
 		} catch (FileNotFoundException e) {
@@ -37,6 +39,8 @@ public class Remove {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return successful;
+		
 	}
 
 

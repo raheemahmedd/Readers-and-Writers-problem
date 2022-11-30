@@ -16,7 +16,7 @@ public class Main extends Application {
 			Parent root = FXMLLoader.load(getClass().getResource("MainScene.fxml"));
 			Scene scene = new Scene(root);
 			
-			primaryStage.getIcons().add(new Image("file:take-off.png"));
+			primaryStage.getIcons().add(new Image("C:\\Users\\yhya2\\Desktop\\Hamid\\images\\take-off.png"));
 			primaryStage.setTitle("Cairo Airport");
 			primaryStage.setScene(scene);
 			primaryStage.show();
