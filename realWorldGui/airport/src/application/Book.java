@@ -18,6 +18,7 @@ public class Book implements Runnable {
 	// the threads are placed into a FIFO queue when blocked, so any starvation
 	// problems are solved.
 	public static Semaphore writeLock = new Semaphore(1, true);
+	Path path = new Path();
 
 	@Override
 	public void run() {
@@ -30,10 +31,9 @@ public class Book implements Runnable {
 			thread.join();
 
 			int val = read.getParis();
-			
 			val--;
-
-			FileWriter myWriter = new FileWriter("C:\\Users\\yhya2\\Desktop\\Hamid\\files\\paris.txt");
+			
+			FileWriter myWriter = new FileWriter(path.files()+"\\paris.txt");
 			myWriter.write(String.valueOf(val));
 			myWriter.close();
 
@@ -51,7 +51,7 @@ public class Book implements Runnable {
 	}
 
 	public void book(int seatNo) throws IOException {
-		FileWriter fw = new FileWriter("C:\\\\Users\\\\yhya2\\\\Desktop\\\\Hamid\\\\files\\\\names.txt", true);
+		FileWriter fw = new FileWriter(path.files()+"\\names.txt", true);
 		BufferedWriter bw = new BufferedWriter(fw);
 		bw.write(seatNo + "\n");
 		bw.close();

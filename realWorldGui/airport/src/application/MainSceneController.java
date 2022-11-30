@@ -24,6 +24,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn;
 
 public class MainSceneController implements Initializable {
+	Path path = new Path();
 	@FXML
 	private Text parisTickets;
 //	private Text londonTickets;
@@ -40,23 +41,30 @@ public class MainSceneController implements Initializable {
 		Platform.runLater(() -> {
 
 			try {
-				Book book = new Book();
 				Reader read = new Reader();
-
+				Thread thread2 = new Thread(read);
+				
+				thread2.start();
+				thread2.join();
+				
 				if (read.getParis() == 0) {
 					throw new IllegalArgumentException("No tickets reamaining");
 				}
-
+				
+				int parisVal = Integer.parseInt(ticketNo.getText());
+				
+				Book book = new Book();
 				Thread thread = new Thread(book);
+				
 				thread.start();
 				thread.join();
-				book.book(Integer.parseInt(ticketNo.getText()));
+				book.book(parisVal);
 
 				Alert alert = new Alert(Alert.AlertType.INFORMATION);
 				alert.setTitle("SUCCESS");
 				alert.setContentText("Ticket booked successfully");
 				Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-				stage.getIcons().add(new Image("C:\\Users\\yhya2\\Desktop\\Hamid\\images\\check.png"));
+				stage.getIcons().add(new Image(path.images()+"\\check.png"));
 				alert.showAndWait();
 
 			} catch (InterruptedException e) {
@@ -69,7 +77,7 @@ public class MainSceneController implements Initializable {
 				alert.setTitle("WARNING");
 				alert.setContentText("Please enter a valid number");
 				Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-				stage.getIcons().add(new Image("C:\\Users\\yhya2\\Desktop\\Hamid\\images\\warning.png"));
+				stage.getIcons().add(new Image(path.images()+"\\warning.png"));
 				alert.showAndWait();
 
 			} catch (IllegalArgumentException e) {
@@ -77,7 +85,7 @@ public class MainSceneController implements Initializable {
 				alert.setTitle("WARNING");
 				alert.setContentText("No tickets available");
 				Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-				stage.getIcons().add(new Image("C:\\Users\\yhya2\\Desktop\\Hamid\\images\\warning.png"));
+				stage.getIcons().add(new Image(path.images()+"\\warning.png"));
 				alert.showAndWait();
 				
 			} catch (IOException e) {
@@ -104,7 +112,7 @@ public class MainSceneController implements Initializable {
 			alert.setTitle("SUCCESS");
 			alert.setContentText("Ticket removed successfully");
 			Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-			stage.getIcons().add(new Image("C:\\Users\\yhya2\\Desktop\\Hamid\\images\\check.png"));
+			stage.getIcons().add(new Image(path.images()+"\\check.png"));
 			alert.showAndWait();
 
 		} catch (IllegalArgumentException e) {
@@ -113,7 +121,7 @@ public class MainSceneController implements Initializable {
 			alert.setTitle("WARNING");
 			alert.setContentText("Please enter a ticket number to be removed");
 			Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-			stage.getIcons().add(new Image("C:\\Users\\yhya2\\Desktop\\Hamid\\images\\warning.png"));
+			stage.getIcons().add(new Image(path.images()+"\\warning.png"));
 			alert.showAndWait();
 
 		} catch (Exception e) {
@@ -122,7 +130,7 @@ public class MainSceneController implements Initializable {
 			alert.setTitle("FAILED");
 			alert.setContentText("Ticket was not removed successfully due to an Error occured");
 			Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-			stage.getIcons().add(new Image("C:\\Users\\yhya2\\Desktop\\Hamid\\images\\cancel.png"));
+			stage.getIcons().add(new Image(path.images()+"\\cancel.png"));
 			alert.showAndWait();
 
 		}

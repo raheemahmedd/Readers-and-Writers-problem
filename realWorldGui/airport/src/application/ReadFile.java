@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 
 public class ReadFile implements Runnable{
+	Path path = new Path();
 	
 	private volatile int londonval;
 	private volatile int parisval;
@@ -13,9 +14,9 @@ public class ReadFile implements Runnable{
 	
 	public void run() {
 		try {
-			File london = new File("C:\\Users\\yhya2\\Desktop\\Hamid\\files\\london.txt");
-			File newyork = new File("C:\\Users\\yhya2\\Desktop\\Hamid\\files\\newyork.txt");
-			File paris = new File("C:\\Users\\yhya2\\Desktop\\Hamid\\files\\paris.txt");
+			File london = new File(path.files()+"\\london.txt");
+			File newyork = new File(path.files()+"\\newyork.txt");
+			File paris = new File(path.files()+"\\paris.txt");
 			
 			Scanner londonf = new Scanner(london);
 			Scanner newyorkf= new Scanner(newyork);

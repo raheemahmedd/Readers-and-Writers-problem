@@ -7,13 +7,13 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-
 public class Remove {
+	Path path = new Path();
 	static boolean successful;
 	public boolean run(String ticketNo) {
 		try {
-			File inputFile = new File("C:\\\\Users\\\\yhya2\\\\Desktop\\\\Hamid\\\\files\\\\names.txt");
-			File tempFile = new File("C:\\\\Users\\\\yhya2\\\\Desktop\\\\Hamid\\\\files\\\\tempfile.txt");
+			File inputFile = new File(path.files()+"\\names.txt");
+			File tempFile = new File(path.files()+"\\tempfile.txt");
 			
 			BufferedReader reader;
 			reader = new BufferedReader(new FileReader(inputFile));
