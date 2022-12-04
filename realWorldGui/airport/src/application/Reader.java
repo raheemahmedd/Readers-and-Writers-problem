@@ -1,21 +1,15 @@
 package application;
 
 import java.util.concurrent.Semaphore;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
 
 public class Reader implements Runnable {
 	// the threads are placed into a FIFO queue when blocked, so any starvation
 	// problems are solved.
 	public static Semaphore readLock = new Semaphore(1, true);
 	public volatile static int readCount = 0; // every thread will read/write the value in main memory only. (atomic)
-	private volatile int londonval;
+	
 	private volatile int parisval;
-	private volatile int newyorkval;
-
-	@SuppressWarnings("resource")
-	@Override
+	
 	public void run() {
 		try {
 			// Acquire Section
@@ -37,11 +31,8 @@ public class Reader implements Runnable {
 			tickets.start();
 			tickets.join();
 			
-			londonval = read.london();
-			newyorkval = read.newyork();
 			parisval = read.paris();
 			
-
 			// Releasing section
 			readLock.acquire();
 			synchronized (this) {
@@ -53,23 +44,15 @@ public class Reader implements Runnable {
 				Book.writeLock.release();
 			}
 			readLock.release();
-		} catch (InterruptedException e) {
+		
+		} catch (InterruptedException e) {	
 			System.out.println(e.getMessage());
+		
 		}
 	}
 
 	public int getParis() {
-
 		return parisval;
-	}
-
-	public int getLondon() {
-
-		return londonval;
-	}
-
-	public int getNewyork() {
-
-		return newyorkval;
+		
 	}
 }

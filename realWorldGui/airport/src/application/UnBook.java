@@ -1,17 +1,16 @@
 package application;
 
 import java.util.concurrent.Semaphore;
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.FileNotFoundException;
-import java.util.Scanner;
 
 public class UnBook implements Runnable {
 	Path path = new Path();
 	// the threads are placed into a FIFO queue when blocked, so any starvation
 	// problems are solved.
 	public static Semaphore writeLock = new Semaphore(1, true);
+	private volatile int ticketsNo;
 
 	@Override
 	public void run() {
@@ -19,26 +18,32 @@ public class UnBook implements Runnable {
 			writeLock.acquire();
 			Reader read = new Reader();
 			Thread thread = new Thread(read);
-			
+
 			thread.start();
 			thread.join();
-			
+
 			int val = read.getParis();
-			val++;
-			
-			FileWriter myWriter = new FileWriter(path.files()+"\\paris.txt");
+			val += this.ticketsNo;
+
+			FileWriter myWriter = new FileWriter(path.files() + "\\paris.txt");
 			myWriter.write(String.valueOf(val));
-			
+
 			writeLock.release();
 			myWriter.close();
+			
 		} catch (InterruptedException e) {
-			System.out.println(e.getMessage());
+			e.printStackTrace();;
+
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	public void setTicketsNo(int ticketsNo) {
+		this.ticketsNo = ticketsNo;
+	
 	}
 }
