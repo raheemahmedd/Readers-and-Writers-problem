@@ -1,5 +1,5 @@
 package application;
-	
+	//real world GUI
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
